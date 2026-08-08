@@ -515,9 +515,9 @@ Tutup
         },
         stats: {
             enabled: true,               // ← false = sembunyikan statistik
-            projects: 99,
-            clients: 99,
-            years: 99,
+            projects: 11,
+            clients: 0,
+            years: 16,
         },
         // Di dalam CONFIG, tambahkan:
 card: {
@@ -539,10 +539,10 @@ card: {
                 openInNewTab: true,
             },
             {
-                id: 'order',
-                label: 'Order Pembuatan Web',
-                url: '#',
-                icon: 'ph-whatsapp-logo',
+                id: 'telegtam',
+                label: 'Telegram',
+                url: 'https://t.me/FFA0099',
+                icon: 'ph-telegram-logo',
                 iconColor: 'text-green-500',
                 customIcon: '',
                 highlight: true,
@@ -553,7 +553,7 @@ card: {
             {
                 id: 'instagram',
                 label: 'Instagram',
-                url: '#',
+                url: 'https://Instagram.com/@irtbrtr',
                 icon: 'ph-instagram-logo',
                 iconColor: 'text-pink-500',
                 customIcon: '',
@@ -565,7 +565,7 @@ card: {
             {
                 id: 'github',
                 label: 'GitHub Repository',
-                url: '#',
+                url: 'https://github.com/xiter00',
                 icon: 'ph-github-logo',
                 iconColor: 'text-slate-700 dark:text-slate-300',
                 customIcon: '',
@@ -577,7 +577,7 @@ card: {
             {
                 id: 'youtube',
                 label: 'YouTube Channel',
-                url: '#',
+                url: 'https://youtube.com/@xitervipp',
                 icon: 'ph-youtube-logo',
                 iconColor: 'text-red-500',
                 customIcon: '',
@@ -600,11 +600,11 @@ card: {
             },
         ],
         socials: [
-            { id: 'github-social', icon: 'ph-github-logo', url: '#', color: 'hover:text-slate-800 dark:hover:text-white', enabled: true },
-            { id: 'youtube-social', icon: 'ph-youtube-logo', url: '#', color: 'hover:text-red-500', enabled: true },
-            { id: 'twitter-social', icon: 'ph-twitter-logo', url: '#', color: 'hover:text-blue-400', enabled: true },
-            { id: 'linkedin-social', icon: 'ph-linkedin-logo', url: '#', color: 'hover:text-blue-600', enabled: true },
-            { id: 'discord-social', icon: 'ph-discord-logo', url: '#', color: 'hover:text-indigo-500', enabled: false },
+            { id: 'github-social', icon: 'ph-github-logo', url: 'https://github.com/xiter00', color: 'hover:text-slate-800 dark:hover:text-white', enabled: true },
+            { id: 'youtube-social', icon: 'ph-youtube-logo', url: 'https://youtube.com/@xitervipp', color: 'hover:text-red-500', enabled: true },
+            { id: 'twitter-social', icon: 'ph-twitter-logo', url: '#', color: 'hover:text-blue-400', enabled: false },
+            { id: 'linkedin-social', icon: 'ph-linkedin-logo', url: '#', color: 'hover:text-blue-600', enabled: false },
+            { id: 'discord-social', icon: 'ph-discord-logo', url: 'https://discord.com/users/1245372147745030224', color: 'hover:text-indigo-500', enabled: true },
         ],
         theme: {
             default: 'dark',            // 'dark' atau 'light'
@@ -629,7 +629,7 @@ card: {
             duration: 1500,
         },
         // Di dalam CONFIG, ganti soundEnabled dan sounds yang lama:
-soundEnabled: false,            // Master switch suara (false = semua suara mati)
+soundEnabled: true,            // Master switch suara (false = semua suara mati)
 soundToggleEnabled: true,       // Tampilkan tombol on/off suara? false = tombol hilang
 sounds: {
     hoverLink: { enabled: true, src: null },   // null = pakai beep sintetis, bisa ganti URL .mp3
@@ -642,7 +642,7 @@ sounds: {
     
     backgroundMusic: {
         enabled: true,
-        src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',                  // Isi URL musik (mp3, ogg, dll)
+        src: 'https://bio.andyy.my.id/bga.mp3',                  // Isi URL musik (mp3, ogg, dll)
         volume: 0.3,
         loop: true,
         playOnLoad: true,        // Otomatis main saat halaman dibuka
@@ -708,7 +708,7 @@ function playCustomSound(src) {
 }
 
 // Fungsi play beep (sebagai fallback)
-function playBeep(freq = 800, duration = 0.08, type = 'sine') {
+function playBeep(freq = 1500, duration = 0.10, type = 'sine') {
    
     try {
         const ctx = getAudioContext();
