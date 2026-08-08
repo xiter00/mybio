@@ -1,1 +1,1212 @@
-index.html
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andy | Premium Links</title>
+    <meta name="description" content="Andy - Hardware Enthusiast & ESP32 Developer">
+    <meta name="theme-color" content="#0f172a">
+    <meta property="og:title" content="Andy | Premium Links">
+    <meta property="og:description" content="Hardware Enthusiast | ESP32 Developer">
+    <meta property="og:image" content="https://api.dicebear.com/7.x/notionists/svg?seed=Andy">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    animation: {
+                        'float-slow': 'float 8s infinite alternate ease-in-out',
+                        'float-medium': 'float 6s infinite alternate ease-in-out',
+                        'float-fast': 'float 4s infinite alternate ease-in-out',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'slide-up': 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'slide-down': 'slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in': 'fadeIn 0.5s ease forwards',
+                        'scale-in': 'scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'border-glow': 'borderGlow 3s infinite alternate',
+                        'shimmer': 'shimmer 2s infinite',
+                        'bounce-soft': 'bounceSoft 2s infinite',
+                        'wiggle': 'wiggle 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%': { transform: 'translateY(0) scale(1)' },
+                            '100%': { transform: 'translateY(40px) scale(1.08)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.4)' },
+                            '50%': { boxShadow: '0 0 40px rgba(59, 130, 246, 0.8)' },
+                        },
+                        slideUp: {
+                            from: { opacity: '0', transform: 'translateY(30px)' },
+                            to: { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideDown: {
+                            from: { opacity: '0', transform: 'translateY(-30px)' },
+                            to: { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            from: { opacity: '0' },
+                            to: { opacity: '1' },
+                        },
+                        scaleIn: {
+                            from: { opacity: '0', transform: 'scale(0.9)' },
+                            to: { opacity: '1', transform: 'scale(1)' },
+                        },
+                        borderGlow: {
+                            '0%': { borderColor: 'rgba(59,130,246,0.5)' },
+                            '100%': { borderColor: 'rgba(139,92,246,0.8)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        },
+                        bounceSoft: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(0deg)' },
+                            '25%': { transform: 'rotate(-3deg)' },
+                            '75%': { transform: 'rotate(3deg)' },
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        :root {
+            --cursor-size: 20px;
+        }
+
+        * {
+            cursor: default;
+        }
+        a,
+        button,
+        .clickable {
+            cursor: pointer;
+        }
+
+        body {
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Background Layers */
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+.bg-layer.light {
+    /* background diatur oleh JS */
+}
+.bg-layer.dark {
+    /* background diatur oleh JS */
+}
+        /* Blobs */
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            will-change: transform;
+        }
+        .blob-1 {
+            width: 350px;
+            height: 350px;
+            background: #3b82f6;
+            top: -8%;
+            left: -8%;
+            animation: floatBlob1 12s infinite alternate ease-in-out;
+        }
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: #8b5cf6;
+            bottom: -10%;
+            right: -8%;
+            animation: floatBlob2 14s infinite alternate ease-in-out;
+        }
+        .blob-3 {
+            width: 250px;
+            height: 250px;
+            background: #ec4899;
+            top: 50%;
+            left: 50%;
+            animation: floatBlob3 16s infinite alternate ease-in-out;
+            opacity: 0.3;
+        }
+        .dark .blob-1 {
+            background: #1e3a8a;
+            opacity: 0.6;
+        }
+        .dark .blob-2 {
+            background: #4c1d95;
+            opacity: 0.6;
+        }
+        .dark .blob-3 {
+            background: #701a75;
+            opacity: 0.35;
+        }
+
+        @keyframes floatBlob1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 60px) scale(1.25); }
+        }
+        @keyframes floatBlob2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-60px, -80px) scale(1.3); }
+        }
+        @keyframes floatBlob3 {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-30%, -70%) scale(1.4); }
+        }
+
+        /* Grid Pattern */
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.3) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transition: opacity 0.5s;
+        }
+        .dark .grid-pattern {
+            opacity: 0.07;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Link Button */
+        .link-btn {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+        .link-btn:hover::before {
+            left: 100%;
+        }
+        .link-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+        .dark .link-btn:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+        .link-btn:active {
+            transform: translateY(0) scale(0.97);
+            transition: all 0.1s;
+        }
+
+        /* Highlight Link */
+        .link-highlight {
+            animation: pulseGlow 2s infinite;
+            border: 2px solid rgba(59, 130, 246, 0.5) !important;
+        }
+        .dark .link-highlight {
+            border: 2px solid rgba(96, 165, 250, 0.5) !important;
+        }
+
+        /* Badge */
+        .badge-new {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            animation: bounceSoft 2s infinite;
+            letter-spacing: 0.5px;
+        }
+
+        /* Ripple */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: rippleEffect 0.6s ease-out;
+            pointer-events: none;
+        }
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.4);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.7);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1e293b;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 100;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            white-space: nowrap;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        .dark .toast {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        .dark .loading-screen {
+            background: #0f172a;
+        }
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(59, 130, 246, 0.2);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin-slow 0.8s linear infinite;
+        }
+
+        /* Custom icon image in links */
+        .link-icon-img {
+            width: 24px;
+            height: 24px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        @media (min-width: 640px) {
+            .link-icon-img {
+                width: 28px;
+                height: 28px;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 dark:text-slate-100 min-h-screen flex items-center justify-center p-4 sm:p-6 selection:bg-blue-500 selection:text-white">
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="flex flex-col items-center space-y-4">
+            <div class="loader-spinner"></div>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Memuat...</p>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Background Image Layer (foto blur) -->
+  <!-- Background Image Layer -->
+
+    <!-- Background Layer -->
+    <div class="bg-layer light dark" id="bgLayer"></div>
+    <div class="blob-container" id="blobContainer">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    <div class="grid-pattern" id="gridPattern"></div>
+
+    <!-- Particles Canvas -->
+    <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+    <!-- Theme Toggle -->
+    <button onclick="toggleTheme()" id="themeToggle"
+    class="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 p-3 rounded-full glass-card hover:rotate-12 transition-all duration-300 clickable"
+    aria-label="Toggle Theme">
+    <i id="themeIcon" class="ph ph-moon text-xl"></i>
+</button>
+
+<!-- Sound Toggle -->
+<button onclick="toggleSound()"
+id="soundToggle"
+class="fixed top-4 left-4 sm:top-6 sm:left-6 z-50 p-3 rounded-full glass-card hover:scale-110 transition-all duration-300 clickable"
+aria-label="Toggle Sound">
+<i id="soundIcon" class="ph ph-speaker-high text-xl"></i>
+</button>
+
+<!-- Main Container -->
+<main id="mainCard"
+class="glass-card w-full max-w-lg mx-auto rounded-3xl p-6 sm:p-8 flex flex-col items-center relative z-10"
+style="opacity: 0; transform: translateY(30px);">
+
+<!-- Profile Picture -->
+<div class="relative group cursor-pointer" onclick="animateProfile()" id="profilePicContainer">
+    <img id="profilePic" src="https://api.dicebear.com/7.x/notionists/svg?seed=Andy" alt="Profile"
+    class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-white/50 dark:border-slate-600/50 shadow-xl group-hover:scale-105 transition-all duration-500">
+    <span class="absolute bottom-1 right-1 flex h-5 w-5" id="statusDot">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-5 w-5 bg-green-500 border-2 border-white dark:border-slate-700"></span>
+    </span>
+    <span id="verifiedBadge" class="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full p-1 shadow-lg">
+        <i class="ph ph-check-fat text-xs"></i>
+    </span>
+</div>
+
+<h1 id="profileName" class="text-2xl sm:text-3xl font-bold mt-5 tracking-tight font-display">Andyy</h1>
+<p id="profileBio" class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-medium text-center px-4">
+    Technical Generalist | Engineer
+</p>
+
+<div id="taglineContainer" class="mt-2 text-center min-h-[24px]">
+    <span id="taglineText" class="text-xs text-slate-400 dark:text-slate-500 italic font-light"></span>
+    <span id="taglineCursor" class="text-blue-500 animate-pulse">|</span>
+</div>
+
+<div id="statsContainer" class="flex space-x-6 mt-4 text-center">
+    <div class="flex flex-col">
+        <span class="text-lg font-bold text-blue-600 dark:text-blue-400" id="statProjects">0</span>
+        <span class="text-xs text-slate-400">Proyek</span>
+    </div>
+    <div class="flex flex-col">
+        <span class="text-lg font-bold text-purple-600 dark:text-purple-400" id="statClients">0</span>
+        <span class="text-xs text-slate-400">Klien</span>
+    </div>
+    <div class="flex flex-col">
+        <span class="text-lg font-bold text-pink-600 dark:text-pink-400" id="statYears">0</span>
+        <span class="text-xs text-slate-400">Tahun</span>
+    </div>
+</div>
+
+<div id="linksContainer" class="w-full mt-6 flex flex-col space-y-3"></div>
+<div id="socialContainer" class="mt-8 flex flex-wrap justify-center gap-4"></div>
+<p id="footerText" class="text-xs text-slate-400 dark:text-slate-500 mt-6 text-center font-light">
+    © 2024 Andy • Dibuat dengan ❤️
+</p>
+</main>
+
+<!-- QR Modal -->
+<div id="qrModal"
+class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 invisible transition-all duration-300"
+onclick="closeQR()">
+<div class="glass-card p-6 rounded-2xl text-center max-w-xs w-full mx-4 scale-90 transition-transform duration-300"
+id="qrModalInner" onclick="event.stopPropagation()">
+<h3 class="font-semibold text-lg mb-3">📱 Scan QR Code</h3>
+<div id="qrCodeContainer" class="bg-white p-3 rounded-xl inline-block mb-3"></div>
+<p class="text-xs text-slate-500">Scan untuk membuka halaman ini</p>
+<button onclick="closeQR()"
+class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full text-sm font-medium hover:bg-blue-600 transition clickable">
+Tutup
+</button>
+</div>
+</div>
+
+<script>
+    // ============================================
+    // 🔧 CONFIGURATION OBJECT — SEMUA BISA TRUE/FALSE
+    // ============================================
+    const CONFIG = {
+        profile: {
+            name: 'Andyy',
+            photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrlfiLadNaKIOZgsjLmaRHLb7MXybsj9Y0FLDJR1PsC0NOPtWQte6G7XE&s=10',
+            bio: 'Technical Generalist | Engineer',
+            taglines: [
+                'Membangun masa depan dengan IoT ✨',
+                'ESP32 & Arduino Lover 🔌',
+                'Open Source Contributor 🌟',
+                'Hardware/Software tinker 🛠️',
+            ],
+            taglineEnabled: true,        // ← matikan/hidupkan animasi tagline
+            taglineInterval: 3000,
+            statusOnline: true,
+            verified: true,
+            footerText: '© 2026 Andy • Dibuat dengan ❤️',
+        },
+        stats: {
+            enabled: true,               // ← false = sembunyikan statistik
+            projects: 99,
+            clients: 99,
+            years: 99,
+        },
+        // Di dalam CONFIG, tambahkan:
+card: {
+    maxWidth: 'max-w-lg',        // bisa 'max-w-md', 'max-w-xl', dll
+    borderRadius: 'rounded-3xl', // 'rounded-2xl', 'rounded-full'
+    padding: 'p-6 sm:p-8',
+},
+        links: [
+            {
+                id: 'web',
+                label: 'Web Portofolio',
+                url: 'https://andyy.my.id',
+                icon: 'ph-globe',
+                iconColor: 'text-blue-500',
+                customIcon: '',            // ← isi dengan URL gambar untuk ganti icon
+                highlight: false,
+                badge: null,
+                enabled: true,
+                openInNewTab: true,
+            },
+            {
+                id: 'order',
+                label: 'Order Pembuatan Web',
+                url: '#',
+                icon: 'ph-whatsapp-logo',
+                iconColor: 'text-green-500',
+                customIcon: '',
+                highlight: true,
+                badge: 'HOT',
+                enabled: true,
+                openInNewTab: true,
+            },
+            {
+                id: 'instagram',
+                label: 'Instagram',
+                url: '#',
+                icon: 'ph-instagram-logo',
+                iconColor: 'text-pink-500',
+                customIcon: '',
+                highlight: false,
+                badge: null,
+                enabled: true,
+                openInNewTab: true,
+            },
+            {
+                id: 'github',
+                label: 'GitHub Repository',
+                url: '#',
+                icon: 'ph-github-logo',
+                iconColor: 'text-slate-700 dark:text-slate-300',
+                customIcon: '',
+                highlight: false,
+                badge: null,
+                enabled: true,
+                openInNewTab: true,
+            },
+            {
+                id: 'youtube',
+                label: 'YouTube Channel',
+                url: '#',
+                icon: 'ph-youtube-logo',
+                iconColor: 'text-red-500',
+                customIcon: '',
+                highlight: false,
+                badge: 'NEW',
+                enabled: true,
+                openInNewTab: true,
+            },
+            {
+                id: 'tiktok',
+                label: 'TikTok',
+                url: '#',
+                icon: 'ph-tiktok-logo',
+                iconColor: 'text-slate-800 dark:text-slate-200',
+                customIcon: '',
+                highlight: false,
+                badge: null,
+                enabled: false,
+                openInNewTab: true,
+            },
+        ],
+        socials: [
+            { id: 'github-social', icon: 'ph-github-logo', url: '#', color: 'hover:text-slate-800 dark:hover:text-white', enabled: true },
+            { id: 'youtube-social', icon: 'ph-youtube-logo', url: '#', color: 'hover:text-red-500', enabled: true },
+            { id: 'twitter-social', icon: 'ph-twitter-logo', url: '#', color: 'hover:text-blue-400', enabled: true },
+            { id: 'linkedin-social', icon: 'ph-linkedin-logo', url: '#', color: 'hover:text-blue-600', enabled: true },
+            { id: 'discord-social', icon: 'ph-discord-logo', url: '#', color: 'hover:text-indigo-500', enabled: false },
+        ],
+        theme: {
+            default: 'dark',            // 'dark' atau 'light'
+            allowToggle: true,         // false = tombol tema hilang, tema terkunci
+        },
+        background: {
+            blobs: true,
+            grid: true,
+            particles: true,
+            particleCount: 50,
+            particleColor: '#3b82f6',
+            particleOpacity: 0.5,
+            image: {                   // ← FOTO BACKGROUND BLUR
+                enabled: false,        // true = aktifkan
+                url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200',
+                blur: '8px',
+                opacity: 0.7,
+            },
+        },
+        loadingScreen: {
+            enabled: true,
+            duration: 1500,
+        },
+        // Di dalam CONFIG, ganti soundEnabled dan sounds yang lama:
+soundEnabled: false,            // Master switch suara (false = semua suara mati)
+soundToggleEnabled: true,       // Tampilkan tombol on/off suara? false = tombol hilang
+sounds: {
+    hoverLink: { enabled: true, src: null },   // null = pakai beep sintetis, bisa ganti URL .mp3
+    clickLink: { enabled: true, src: null },
+    hoverSocial: { enabled: true, src: null },
+    clickSocial: { enabled: true, src: null },
+    profileClick: { enabled: true, src: null },
+    themeToggle: { enabled: true, src: null },
+    // Musik latar (looping)
+    
+    backgroundMusic: {
+        enabled: true,
+        src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',                  // Isi URL musik (mp3, ogg, dll)
+        volume: 0.3,
+        loop: true,
+        playOnLoad: true,        // Otomatis main saat halaman dibuka
+    },
+},
+        qrCode: {
+            enabled: true,
+            showButton: true,
+        },
+        animations: {
+            staggerDelay: 100,
+            hoverScale: true,
+            rippleEffect: true,
+        },
+        seo: {
+            title: 'Andy | Premium Links',
+            description: 'Andy - Hardware Enthusiast & ESP32 Developer',
+        },
+    };
+
+    // ============================================
+    // 🔥 INISIALISASI
+    // ============================================
+    let currentTaglineIndex = 0;
+    let isTaglineDeleting = false;
+    let taglineCharIndex = 0;
+    let particlesArray = [];
+    let animationFrameId = null;
+
+    const html = document.documentElement;
+    const themeIcon = document.getElementById('themeIcon');
+    const soundIcon = document.getElementById('soundIcon');
+    const loadingScreen = document.getElementById('loadingScreen');
+    const mainCard = document.getElementById('mainCard');
+    const linksContainer = document.getElementById('linksContainer');
+    const socialContainer = document.getElementById('socialContainer');
+    const taglineText = document.getElementById('taglineText');
+    const taglineCursor = document.getElementById('taglineCursor');
+    const statusDot = document.getElementById('statusDot');
+    const verifiedBadge = document.getElementById('verifiedBadge');
+    const particleCanvas = document.getElementById('particleCanvas');
+    const ctx = particleCanvas.getContext('2d');
+    const toastEl = document.getElementById('toast');
+    const qrModal = document.getElementById('qrModal');
+    const qrModalInner = document.getElementById('qrModalInner');
+    const qrCodeContainer = document.getElementById('qrCodeContainer');
+    const profilePicContainer = document.getElementById('profilePicContainer');
+    
+
+    let audioCtx = null;
+    function getAudioContext() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        return audioCtx;
+    }
+   // Fungsi play suara kustom (dari file)
+function playCustomSound(src) {
+    if (!CONFIG.soundEnabled || !src) return;
+    try {
+        const audio = new Audio(src);
+        audio.volume = 0.5;
+        audio.play().catch(() => {});
+    } catch (e) {}
+}
+
+// Fungsi play beep (sebagai fallback)
+function playBeep(freq = 800, duration = 0.08, type = 'sine') {
+   
+    try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + duration);
+    } catch (e) {}
+}
+
+    let toastTimeout;
+    function showToast(msg) {
+        clearTimeout(toastTimeout);
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        toastTimeout = setTimeout(() => toastEl.classList.remove('show'), 2000);
+    }
+
+    function setTheme(theme) {
+    if (theme === 'dark') {
+        html.classList.add('dark');
+        themeIcon.classList.remove('ph-sun');
+        themeIcon.classList.add('ph-moon');
+    } else {
+        html.classList.remove('dark');
+        themeIcon.classList.remove('ph-moon');
+        themeIcon.classList.add('ph-sun');
+    }
+    localStorage.setItem('theme', theme);
+    updateBackgroundEffects(); // ← tambahkan ini
+}
+    function toggleTheme() {
+        playBeep(600, 0.06);
+        const newTheme = html.classList.contains('dark') ? 'light' : 'dark';
+        setTheme(newTheme);
+    }
+    function updateSoundIcon() {
+    const soundToggle = document.getElementById('soundToggle');
+    if (!CONFIG.soundToggleEnabled) {
+        soundToggle.style.display = 'none';
+        return;
+    }
+    soundToggle.style.display = 'flex'; // atau 'block'
+    if (CONFIG.soundEnabled) {
+        soundIcon.classList.remove('ph-speaker-x');
+        soundIcon.classList.add('ph-speaker-high');
+    } else {
+        soundIcon.classList.remove('ph-speaker-high');
+        soundIcon.classList.add('ph-speaker-x');
+    }
+}
+function toggleSound() {
+    CONFIG.soundEnabled = !CONFIG.soundEnabled;
+    updateSoundIcon();
+
+    if (window.bgMusic) {
+        if (CONFIG.soundEnabled) {
+            window.bgMusic.play().catch(() => {});
+        } else {
+            window.bgMusic.pause();
+        }
+    }
+    showToast(CONFIG.soundEnabled ? '🔊 Suara Aktif' : '🔇 Suara Nonaktif');
+}
+    function hideLoadingScreen() {
+        if (CONFIG.loadingScreen.enabled) {
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    if (loadingScreen.parentNode) loadingScreen.style.display = 'none';
+                }, 500);
+            }, CONFIG.loadingScreen.duration);
+        } else {
+            loadingScreen.style.display = 'none';
+        }
+    }
+
+    function typeTagline() {
+        if (!CONFIG.profile.taglineEnabled || !CONFIG.profile.taglines || CONFIG.profile.taglines.length === 0) {
+            taglineText.textContent = '';
+            taglineCursor.style.display = 'none';
+            return;
+        }
+        const currentTagline = CONFIG.profile.taglines[currentTaglineIndex];
+        if (!isTaglineDeleting) {
+            if (taglineCharIndex < currentTagline.length) {
+                taglineText.textContent = currentTagline.substring(0, taglineCharIndex + 1);
+                taglineCharIndex++;
+                taglineCursor.style.display = 'inline';
+                setTimeout(typeTagline, 60);
+            } else {
+                isTaglineDeleting = true;
+                taglineCursor.style.display = 'inline';
+                setTimeout(typeTagline, CONFIG.profile.taglineInterval);
+            }
+        } else {
+            if (taglineCharIndex > 0) {
+                taglineText.textContent = currentTagline.substring(0, taglineCharIndex - 1);
+                taglineCharIndex--;
+                taglineCursor.style.display = 'inline';
+                setTimeout(typeTagline, 30);
+            } else {
+                isTaglineDeleting = false;
+                currentTaglineIndex = (currentTaglineIndex + 1) % CONFIG.profile.taglines.length;
+                taglineCursor.style.display = 'inline';
+                setTimeout(typeTagline, 400);
+            }
+        }
+    }
+
+    function addRipple(e, el) {
+        if (!CONFIG.animations.rippleEffect) return;
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        const rect = el.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        el.style.position = 'relative';
+        el.style.overflow = 'hidden';
+        el.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
+    }
+
+    function renderLinks() {
+        linksContainer.innerHTML = '';
+        const enabledLinks = CONFIG.links.filter(l => l.enabled);
+        enabledLinks.forEach((link, index) => {
+            const a = document.createElement('a');
+            a.href = link.url;
+            if (link.openInNewTab) a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = `link-btn w-full glass-card py-4 px-5 rounded-2xl flex items-center justify-between group clickable`;
+            if (link.highlight) a.classList.add('link-highlight');
+            a.style.animationDelay = `${index * CONFIG.animations.staggerDelay}ms`;
+            a.style.opacity = '0';
+            a.style.transform = 'translateY(20px)';
+            a.classList.add('animate-slide-up');
+
+            a.addEventListener('click', function(e) { addRipple(e, a); playBeep(800, 0.05); });
+            // Di dalam renderLinks(), event mouseenter:
+a.addEventListener('mouseenter', () => {
+    if (CONFIG.sounds.hoverLink.enabled) {
+        if (CONFIG.sounds.hoverLink.src) {
+            playCustomSound(CONFIG.sounds.hoverLink.src);
+        } else {
+            playBeep(400, 0.03, 'triangle');
+        }
+    }
+});
+            let iconHTML = '';
+            if (link.customIcon && link.customIcon.trim() !== '') {
+                iconHTML = `<img src="${link.customIcon}" class="link-icon-img flex-shrink-0" alt="">`;
+            } else {
+                iconHTML = `<i class="ph ${link.icon} text-xl sm:text-2xl ${link.iconColor} flex-shrink-0"></i>`;
+            }
+
+            let badgeHTML = link.badge ? `<span class="badge-new ml-2">${link.badge}</span>` : '';
+
+            a.innerHTML = `
+                <div class="flex items-center space-x-3 min-w-0">
+                    ${iconHTML}
+                    <span class="font-semibold text-sm sm:text-base truncate">${link.label}</span>
+                    ${badgeHTML}
+                </div>
+                <i class="ph ph-arrow-up-right text-slate-400 group-hover:text-slate-800 dark:group-hover:text-white transition-colors flex-shrink-0 ml-2"></i>
+            `;
+            linksContainer.appendChild(a);
+        });
+
+        if (CONFIG.qrCode.enabled && CONFIG.qrCode.showButton) {
+            const qrBtn = document.createElement('button');
+            qrBtn.className = `link-btn w-full glass-card py-3 px-5 rounded-2xl flex items-center justify-center space-x-2 clickable text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white`;
+            qrBtn.style.animationDelay = `${enabledLinks.length * CONFIG.animations.staggerDelay}ms`;
+            qrBtn.style.opacity = '0';
+            qrBtn.style.transform = 'translateY(20px)';
+            qrBtn.classList.add('animate-slide-up');
+            qrBtn.innerHTML = `<i class="ph ph-qr-code text-lg"></i><span>QR Code</span>`;
+            qrBtn.addEventListener('click', function(e) { addRipple(e, qrBtn); playBeep(500, 0.06); openQR(); });
+            linksContainer.appendChild(qrBtn);
+        }
+    }
+
+    function renderSocials() {
+        socialContainer.innerHTML = '';
+        const enabledSocials = CONFIG.socials.filter(s => s.enabled);
+        enabledSocials.forEach((social, index) => {
+            const a = document.createElement('a');
+            a.href = social.url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = `text-slate-400 ${social.color} hover:-translate-y-1.5 transition-all duration-300 clickable text-2xl sm:text-3xl`;
+            a.style.animationDelay = `${(CONFIG.links.filter(l=>l.enabled).length + index + 1) * CONFIG.animations.staggerDelay}ms`;
+            a.style.opacity = '0';
+            a.style.transform = 'translateY(20px)';
+            a.classList.add('animate-slide-up');
+            a.innerHTML = `<i class="ph ${social.icon}"></i>`;
+            a.addEventListener('click', () => playBeep(700, 0.04));
+            socialContainer.appendChild(a);
+        });
+    }
+
+    function openQR() {
+        qrModal.classList.remove('opacity-0', 'invisible');
+        qrModalInner.classList.remove('scale-90');
+        qrModalInner.classList.add('scale-100');
+        renderQRCode();
+    }
+    function closeQR() {
+        qrModal.classList.add('opacity-0', 'invisible');
+        qrModalInner.classList.add('scale-90');
+        qrModalInner.classList.remove('scale-100');
+    }
+    function renderQRCode() {
+        qrCodeContainer.innerHTML = '';
+        const url = window.location.href;
+        const size = 150;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const qctx = canvas.getContext('2d');
+        qctx.fillStyle = '#ffffff';
+        qctx.fillRect(0, 0, size, size);
+        qctx.fillStyle = '#000000';
+        const modules = 21;
+        const moduleSize = size / modules;
+        let hash = 0;
+        for (let i = 0; i < url.length; i++) {
+            hash = ((hash << 5) - hash) + url.charCodeAt(i);
+            hash |= 0;
+        }
+        const seededRandom = (seed) => {
+            let s = seed;
+            return () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; };
+        };
+        const rand = seededRandom(Math.abs(hash));
+        for (let row = 0; row < modules; row++) {
+            for (let col = 0; col < modules; col++) {
+                if (row < 7 && col < 7) { qctx.fillStyle = '#000'; qctx.fillRect(col*moduleSize, row*moduleSize, moduleSize, moduleSize); }
+                else if (row < 7 && col > modules-8) { qctx.fillStyle = '#000'; qctx.fillRect(col*moduleSize, row*moduleSize, moduleSize, moduleSize); }
+                else if (row > modules-8 && col < 7) { qctx.fillStyle = '#000'; qctx.fillRect(col*moduleSize, row*moduleSize, moduleSize, moduleSize); }
+                else if (rand() > 0.5) { qctx.fillStyle = '#000'; qctx.fillRect(col*moduleSize, row*moduleSize, moduleSize, moduleSize); }
+            }
+        }
+        qrCodeContainer.appendChild(canvas);
+    }
+
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * particleCanvas.width;
+            this.y = Math.random() * particleCanvas.height;
+            this.size = Math.random() * 2.5 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.5;
+            this.speedY = (Math.random() - 0.5) * 0.5;
+            this.opacity = Math.random() * CONFIG.background.particleOpacity + 0.1;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < -10) this.x = particleCanvas.width + 10;
+            if (this.x > particleCanvas.width + 10) this.x = -10;
+            if (this.y < -10) this.y = particleCanvas.height + 10;
+            if (this.y > particleCanvas.height + 10) this.y = -10;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+            ctx.fillStyle = CONFIG.background.particleColor;
+            ctx.globalAlpha = this.opacity;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        }
+    }
+
+    function initParticles() {
+        particlesArray = [];
+        for (let i = 0; i < CONFIG.background.particleCount; i++) particlesArray.push(new Particle());
+    }
+    function animateParticles() {
+        if (!CONFIG.background.particles) {
+            ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+            animationFrameId = requestAnimationFrame(animateParticles);
+            return;
+        }
+        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+        for (let i = 0; i < particlesArray.length; i++) {
+            for (let j = i+1; j < particlesArray.length; j++) {
+                const dx = particlesArray[i].x - particlesArray[j].x;
+                const dy = particlesArray[i].y - particlesArray[j].y;
+                const dist = Math.sqrt(dx*dx+dy*dy);
+                if (dist < 100) {
+                    ctx.beginPath();
+                    ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                    ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                    ctx.strokeStyle = CONFIG.background.particleColor;
+                    ctx.globalAlpha = (1 - dist/100) * CONFIG.background.particleOpacity * 0.5;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            }
+        }
+        particlesArray.forEach(p => { p.update(); p.draw(); });
+        animationFrameId = requestAnimationFrame(animateParticles);
+    }
+    function resizeCanvas() {
+        particleCanvas.width = window.innerWidth;
+        particleCanvas.height = window.innerHeight;
+        initParticles();
+    }
+
+function updateBackgroundEffects() {
+    const blobContainer = document.getElementById('blobContainer');
+    const gridPattern = document.getElementById('gridPattern');
+    const bgLayer = document.getElementById('bgLayer');
+
+    blobContainer.style.display = CONFIG.background.blobs ? 'block' : 'none';
+    gridPattern.style.display = CONFIG.background.grid ? 'block' : 'none';
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const imageUrl = CONFIG.background.image?.enabled ? CONFIG.background.image.url : null;
+    const imageBlur = CONFIG.background.image?.blur || '8px';
+    const imageOpacity = CONFIG.background.image?.opacity || 0.7;
+
+    let bgImageLayer = '';
+    if (imageUrl) {
+        bgImageLayer = `url('${imageUrl}')`;
+    }
+
+  let gradientLayer;
+const hasImage = imageUrl ? true : false;
+
+if (isDark) {
+    // Dark mode: alpha cukup 0.55 (gambar sudah gelap)
+    gradientLayer = `linear-gradient(135deg, #0f172a 0%, #1a0a2e 30%, #0a1a1a 60%, #0a0a1a 100%)`;
+} else {
+    // Light mode: jika ada gambar, pertebal overlay (alpha 0.75) agar teks gelap terbaca
+    const alpha = hasImage ? '0.75' : '0.55';
+    gradientLayer = `linear-gradient(135deg, #f0f4ff 0%, #fdf2f8 30%, #f0fdf4 60%, #eff6ff 100%)`;
+}
+
+    let bgValue = gradientLayer;
+    if (bgImageLayer) {
+        bgValue = `${bgImageLayer} center/cover no-repeat, ` + bgValue;
+    }
+
+    bgLayer.style.background = bgValue;
+    // filter jangan diaplikasikan ke bgLayer karena akan memblur gradasi juga.
+    // Sebagai ganti, gambar sudah blur? Tidak bisa langsung. Alternatif: biarkan tanpa filter,
+    // atau gunakan CSS terpisah. Untuk amannya, hilangkan filter dulu.
+    bgLayer.style.filter = 'none';
+    const mainCard = document.getElementById('mainCard');
+if (hasImage) {
+    mainCard.classList.add('bg-opacity-80', 'dark:bg-opacity-70');
+} else {
+    mainCard.classList.remove('bg-opacity-80', 'dark:bg-opacity-70');
+}
+}
+
+    function animateProfile() {
+        playBeep(900, 0.07, 'sine');
+        profilePicContainer.classList.add('animate-wiggle');
+        setTimeout(() => profilePicContainer.classList.remove('animate-wiggle'), 500);
+    }
+
+    function updateStats() {
+        const container = document.getElementById('statsContainer');
+        if (!CONFIG.stats.enabled) {
+            container.style.display = 'none';
+            return;
+        }
+        container.style.display = 'flex';
+        animateCount('statProjects', CONFIG.stats.projects);
+        animateCount('statClients', CONFIG.stats.clients);
+        animateCount('statYears', CONFIG.stats.years);
+    }
+
+    function animateCount(elId, target) {
+        const el = document.getElementById(elId);
+        const start = 0;
+        const duration = 1500;
+        const startTime = performance.now();
+        function update(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(start + (target - start) * eased);
+            if (progress < 1) requestAnimationFrame(update);
+            else el.textContent = target;
+        }
+        requestAnimationFrame(update);
+    }
+
+    function updateProfile() {
+        document.getElementById('profileName').textContent = CONFIG.profile.name;
+        document.getElementById('profileBio').textContent = CONFIG.profile.bio;
+        document.getElementById('profilePic').src = CONFIG.profile.photo;
+        document.getElementById('footerText').textContent = CONFIG.profile.footerText;
+        document.title = CONFIG.seo.title;
+        document.querySelector('meta[name="description"]').setAttribute('content', CONFIG.seo.description);
+        document.querySelector('meta[property="og:title"]').setAttribute('content', CONFIG.seo.title);
+        document.querySelector('meta[property="og:description"]').setAttribute('content', CONFIG.seo.description);
+        document.querySelector('meta[property="og:image"]').setAttribute('content', CONFIG.profile.photo);
+
+        if (!CONFIG.profile.statusOnline) {
+            statusDot.innerHTML = `<span class="relative inline-flex rounded-full h-5 w-5 bg-gray-400 border-2 border-white dark:border-slate-700"></span>`;
+        }
+        if (!CONFIG.profile.verified) {
+            verifiedBadge.style.display = 'none';
+        }
+        if (!CONFIG.profile.taglineEnabled || !CONFIG.profile.taglines || CONFIG.profile.taglines.length === 0) {
+            document.getElementById('taglineContainer').style.display = 'none';
+        } else {
+            document.getElementById('taglineContainer').style.display = 'block';
+        }
+    }
+
+    function init() {
+        const savedTheme = localStorage.getItem('theme') || CONFIG.theme.default;
+        setTheme(savedTheme);
+        if (!CONFIG.theme.allowToggle) {
+            document.getElementById('themeToggle').style.display = 'none';
+        }
+        updateSoundIcon();
+        updateBackgroundEffects();
+        updateProfile();
+        renderLinks();
+        renderSocials();
+        updateStats();
+        
+        // Background music
+// Background music
+// Selalu buat Audio object (tidak tergantung soundEnabled)
+if (CONFIG.sounds.backgroundMusic.enabled && CONFIG.sounds.backgroundMusic.src) {
+    const bgMusic = new Audio(CONFIG.sounds.backgroundMusic.src);
+    bgMusic.loop = CONFIG.sounds.backgroundMusic.loop;
+    bgMusic.volume = CONFIG.sounds.backgroundMusic.volume;
+    window.bgMusic = bgMusic; // ← simpan referensi
+
+    // Hanya putar kalau soundEnabled
+    if (CONFIG.sounds.backgroundMusic.playOnLoad && CONFIG.soundEnabled) {
+        const playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                document.addEventListener('click', () => {
+                    if (CONFIG.soundEnabled) bgMusic.play();
+                }, { once: true });
+            });
+        }
+    }
+}
+
+        if (CONFIG.profile.taglineEnabled && CONFIG.profile.taglines && CONFIG.profile.taglines.length > 0) {
+            setTimeout(typeTagline, 800);
+        }
+
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+        hideLoadingScreen();
+
+        setTimeout(() => {
+            mainCard.style.transition = 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+            mainCard.style.opacity = '1';
+            mainCard.style.transform = 'translateY(0)';
+        }, CONFIG.loadingScreen.enabled ? CONFIG.loadingScreen.duration - 400 : 100);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 't' && e.ctrlKey && CONFIG.theme.allowToggle) {
+                e.preventDefault();
+                toggleTheme();
+            }
+            if (e.key === 'Escape') closeQR();
+        });
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    qrModal.addEventListener('click', function(e) { if (e.target === qrModal) closeQR(); });
+    document.addEventListener('DOMContentLoaded', init);
+
+    window.toggleTheme = toggleTheme;
+    window.closeQR = closeQR;
+    window.animateProfile = animateProfile;
+    window.CONFIG = CONFIG;
+    window.showToast = showToast;
+    window.updateSoundIcon = updateSoundIcon;
+
+    console.log('%c🚀 Bio Link Premium Siap! %cby Andy', 'font-size: 1.2em; font-weight: bold; color: #3b82f6;', 'color: #8b5cf6;');
+    console.log('%c💡 Ubah semua di CONFIG object. %cCtrl+T untuk toggle tema.', 'color: #ec4899;', 'color: #64748b;');
+    console.log('%c📋 Links aktif:', 'font-weight: bold;', CONFIG.links.filter(l => l.enabled).map(l => l.label).join(', '));
+</script>
+</body>
+</html>
