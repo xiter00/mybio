@@ -14,6 +14,9 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Tambahan CDN untuk QR Code Asli -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script>
@@ -107,7 +110,6 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* Background Layers */
         .bg-layer {
             position: fixed;
             top: 0;
@@ -118,13 +120,7 @@
             pointer-events: none;
             transition: background 0.5s ease;
         }
-.bg-layer.light {
-    /* background diatur oleh JS */
-}
-.bg-layer.dark {
-    /* background diatur oleh JS */
-}
-        /* Blobs */
+
         .blob-container {
             position: fixed;
             top: 0;
@@ -193,7 +189,6 @@
             100% { transform: translate(-30%, -70%) scale(1.4); }
         }
 
-        /* Grid Pattern */
         .grid-pattern {
             position: fixed;
             top: 0;
@@ -216,7 +211,6 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
         }
 
-        /* Glass Card */
         .glass-card {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(20px);
@@ -230,7 +224,6 @@
             box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* Link Button */
         .link-btn {
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -261,7 +254,6 @@
             transition: all 0.1s;
         }
 
-        /* Highlight Link */
         .link-highlight {
             animation: pulseGlow 2s infinite;
             border: 2px solid rgba(59, 130, 246, 0.5) !important;
@@ -270,7 +262,6 @@
             border: 2px solid rgba(96, 165, 250, 0.5) !important;
         }
 
-        /* Badge */
         .badge-new {
             background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             color: white;
@@ -282,7 +273,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Ripple */
         .ripple {
             position: absolute;
             border-radius: 50%;
@@ -298,7 +288,6 @@
             }
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -313,7 +302,6 @@
             background: rgba(148, 163, 184, 0.7);
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -338,7 +326,6 @@
             color: #0f172a;
         }
 
-        /* Loading Screen */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -368,7 +355,6 @@
             animation: spin-slow 0.8s linear infinite;
         }
 
-        /* Custom icon image in links */
         .link-icon-img {
             width: 24px;
             height: 24px;
@@ -395,9 +381,6 @@
 
     <!-- Toast -->
     <div id="toast" class="toast"></div>
-
-    <!-- Background Image Layer (foto blur) -->
-  <!-- Background Image Layer -->
 
     <!-- Background Layer -->
     <div class="bg-layer light dark" id="bgLayer"></div>
@@ -483,7 +466,7 @@ onclick="closeQR()">
 <div class="glass-card p-6 rounded-2xl text-center max-w-xs w-full mx-4 scale-90 transition-transform duration-300"
 id="qrModalInner" onclick="event.stopPropagation()">
 <h3 class="font-semibold text-lg mb-3">📱 Scan QR Code</h3>
-<div id="qrCodeContainer" class="bg-white p-3 rounded-xl inline-block mb-3"></div>
+<div id="qrCodeContainer" class="bg-white p-3 rounded-xl inline-flex justify-center items-center mb-3 min-w-[150px] min-h-[150px]"></div>
 <p class="text-xs text-slate-500">Scan untuk membuka halaman ini</p>
 <button onclick="closeQR()"
 class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full text-sm font-medium hover:bg-blue-600 transition clickable">
@@ -493,9 +476,6 @@ Tutup
 </div>
 
 <script>
-    // ============================================
-    // 🔧 CONFIGURATION OBJECT — SEMUA BISA TRUE/FALSE
-    // ============================================
     const CONFIG = {
         profile: {
             name: 'Andyy',
@@ -507,24 +487,23 @@ Tutup
                 'Open Source Contributor 🌟',
                 'Hardware/Software tinker 🛠️',
             ],
-            taglineEnabled: true,        // ← matikan/hidupkan animasi tagline
+            taglineEnabled: true,
             taglineInterval: 3000,
             statusOnline: true,
             verified: true,
             footerText: '© 2026 Andy • Dibuat dengan ❤️',
         },
         stats: {
-            enabled: true,               // ← false = sembunyikan statistik
+            enabled: true,
             projects: 11,
             clients: 0,
             years: 16,
         },
-        // Di dalam CONFIG, tambahkan:
-card: {
-    maxWidth: 'max-w-lg',        // bisa 'max-w-md', 'max-w-xl', dll
-    borderRadius: 'rounded-3xl', // 'rounded-2xl', 'rounded-full'
-    padding: 'p-6 sm:p-8',
-},
+        card: {
+            maxWidth: 'max-w-lg',
+            borderRadius: 'rounded-3xl',
+            padding: 'p-6 sm:p-8',
+        },
         links: [
             {
                 id: 'web',
@@ -532,7 +511,7 @@ card: {
                 url: 'https://andyy.my.id',
                 icon: 'ph-globe',
                 iconColor: 'text-blue-500',
-                customIcon: '',            // ← isi dengan URL gambar untuk ganti icon
+                customIcon: '',
                 highlight: false,
                 badge: null,
                 enabled: true,
@@ -607,8 +586,8 @@ card: {
             { id: 'discord-social', icon: 'ph-discord-logo', url: 'https://discord.com/users/1245372147745030224', color: 'hover:text-indigo-500', enabled: true },
         ],
         theme: {
-            default: 'dark',            // 'dark' atau 'light'
-            allowToggle: true,         // false = tombol tema hilang, tema terkunci
+            default: 'dark',
+            allowToggle: true,
         },
         background: {
             blobs: true,
@@ -616,38 +595,35 @@ card: {
             particles: true,
             particleCount: 50,
             particleColor: '#3b82f6',
-            particleOpacity: 0.5,
-            image: {                   // ← FOTO BACKGROUND BLUR
-                enabled: true,        // true = aktifkan
+            particleOpacity: 0.8,
+            image: {
+                enabled: true,
                 url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN_jeByLIwPjokg3y_BMJHdptDu9RZ21K7r7kAl_djLw&s=10',
                 blur: '8px',
-                opacity: 0.7,
+                opacity: 0.6,
             },
         },
         loadingScreen: {
             enabled: true,
             duration: 1500,
         },
-        // Di dalam CONFIG, ganti soundEnabled dan sounds yang lama:
-soundEnabled: true,            // Master switch suara (false = semua suara mati)
-soundToggleEnabled: true,       // Tampilkan tombol on/off suara? false = tombol hilang
-sounds: {
-    hoverLink: { enabled: true, src: null },   // null = pakai beep sintetis, bisa ganti URL .mp3
-    clickLink: { enabled: true, src: null },
-    hoverSocial: { enabled: true, src: null },
-    clickSocial: { enabled: true, src: null },
-    profileClick: { enabled: true, src: null },
-    themeToggle: { enabled: true, src: null },
-    // Musik latar (looping)
-    
-    backgroundMusic: {
-        enabled: true,
-        src: 'https://bio.andyy.my.id/bga.mp3',                  // Isi URL musik (mp3, ogg, dll)
-        volume: 0.3,
-        loop: true,
-        playOnLoad: true,        // Otomatis main saat halaman dibuka
-    },
-},
+        soundEnabled: true,
+        soundToggleEnabled: true,
+        sounds: {
+            hoverLink: { enabled: true, src: null },
+            clickLink: { enabled: true, src: null },
+            hoverSocial: { enabled: true, src: null },
+            clickSocial: { enabled: true, src: null },
+            profileClick: { enabled: true, src: null },
+            themeToggle: { enabled: true, src: null },
+            backgroundMusic: {
+                enabled: true,
+                src: 'https://bio.andyy.my.id/bga.mp3',
+                volume: 0.3,
+                loop: true,
+                playOnLoad: true,
+            },
+        },
         qrCode: {
             enabled: true,
             showButton: true,
@@ -663,9 +639,6 @@ sounds: {
         },
     };
 
-    // ============================================
-    // 🔥 INISIALISASI
-    // ============================================
     let currentTaglineIndex = 0;
     let isTaglineDeleting = false;
     let taglineCharIndex = 0;
@@ -690,40 +663,37 @@ sounds: {
     const qrModalInner = document.getElementById('qrModalInner');
     const qrCodeContainer = document.getElementById('qrCodeContainer');
     const profilePicContainer = document.getElementById('profilePicContainer');
-    
 
     let audioCtx = null;
     function getAudioContext() {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         return audioCtx;
     }
-   // Fungsi play suara kustom (dari file)
-function playCustomSound(src) {
-    if (!CONFIG.soundEnabled || !src) return;
-    try {
-        const audio = new Audio(src);
-        audio.volume = 0.5;
-        audio.play().catch(() => {});
-    } catch (e) {}
-}
 
-// Fungsi play beep (sebagai fallback)
-function playBeep(freq = 1500, duration = 0.10, type = 'sine') {
-   
-    try {
-        const ctx = getAudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + duration);
-    } catch (e) {}
-}
+    function playCustomSound(src) {
+        if (!CONFIG.soundEnabled || !src) return;
+        try {
+            const audio = new Audio(src);
+            audio.volume = 0.5;
+            audio.play().catch(() => {});
+        } catch (e) {}
+    }
+
+    function playBeep(freq = 1500, duration = 0.10, type = 'sine') {
+        try {
+            const ctx = getAudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            gain.gain.setValueAtTime(0.08, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + duration);
+        } catch (e) {}
+    }
 
     let toastTimeout;
     function showToast(msg) {
@@ -734,51 +704,55 @@ function playBeep(freq = 1500, duration = 0.10, type = 'sine') {
     }
 
     function setTheme(theme) {
-    if (theme === 'dark') {
-        html.classList.add('dark');
-        themeIcon.classList.remove('ph-sun');
-        themeIcon.classList.add('ph-moon');
-    } else {
-        html.classList.remove('dark');
-        themeIcon.classList.remove('ph-moon');
-        themeIcon.classList.add('ph-sun');
+        if (theme === 'dark') {
+            html.classList.add('dark');
+            themeIcon.classList.remove('ph-sun');
+            themeIcon.classList.add('ph-moon');
+        } else {
+            html.classList.remove('dark');
+            themeIcon.classList.remove('ph-moon');
+            themeIcon.classList.add('ph-sun');
+        }
+        localStorage.setItem('theme', theme);
+        updateBackgroundEffects();
     }
-    localStorage.setItem('theme', theme);
-    updateBackgroundEffects(); // ← tambahkan ini
-}
+
     function toggleTheme() {
         playBeep(600, 0.06);
         const newTheme = html.classList.contains('dark') ? 'light' : 'dark';
         setTheme(newTheme);
     }
-    function updateSoundIcon() {
-    const soundToggle = document.getElementById('soundToggle');
-    if (!CONFIG.soundToggleEnabled) {
-        soundToggle.style.display = 'none';
-        return;
-    }
-    soundToggle.style.display = 'flex'; // atau 'block'
-    if (CONFIG.soundEnabled) {
-        soundIcon.classList.remove('ph-speaker-x');
-        soundIcon.classList.add('ph-speaker-high');
-    } else {
-        soundIcon.classList.remove('ph-speaker-high');
-        soundIcon.classList.add('ph-speaker-x');
-    }
-}
-function toggleSound() {
-    CONFIG.soundEnabled = !CONFIG.soundEnabled;
-    updateSoundIcon();
 
-    if (window.bgMusic) {
+    function updateSoundIcon() {
+        const soundToggle = document.getElementById('soundToggle');
+        if (!CONFIG.soundToggleEnabled) {
+            soundToggle.style.display = 'none';
+            return;
+        }
+        soundToggle.style.display = 'flex';
         if (CONFIG.soundEnabled) {
-            window.bgMusic.play().catch(() => {});
+            soundIcon.classList.remove('ph-speaker-x');
+            soundIcon.classList.add('ph-speaker-high');
         } else {
-            window.bgMusic.pause();
+            soundIcon.classList.remove('ph-speaker-high');
+            soundIcon.classList.add('ph-speaker-x');
         }
     }
-    showToast(CONFIG.soundEnabled ? '🔊 Suara Aktif' : '🔇 Suara Nonaktif');
-}
+
+    function toggleSound() {
+        CONFIG.soundEnabled = !CONFIG.soundEnabled;
+        updateSoundIcon();
+
+        if (window.bgMusic) {
+            if (CONFIG.soundEnabled) {
+                window.bgMusic.play().catch(() => {});
+            } else {
+                window.bgMusic.pause();
+            }
+        }
+        showToast(CONFIG.soundEnabled ? '🔊 Suara Aktif' : '🔇 Suara Nonaktif');
+    }
+
     function hideLoadingScreen() {
         if (CONFIG.loadingScreen.enabled) {
             setTimeout(() => {
@@ -856,16 +830,16 @@ function toggleSound() {
             a.classList.add('animate-slide-up');
 
             a.addEventListener('click', function(e) { addRipple(e, a); playBeep(800, 0.05); });
-            // Di dalam renderLinks(), event mouseenter:
-a.addEventListener('mouseenter', () => {
-    if (CONFIG.sounds.hoverLink.enabled) {
-        if (CONFIG.sounds.hoverLink.src) {
-            playCustomSound(CONFIG.sounds.hoverLink.src);
-        } else {
-            playBeep(400, 0.03, 'triangle');
-        }
-    }
-});
+            a.addEventListener('mouseenter', () => {
+                if (CONFIG.sounds.hoverLink.enabled) {
+                    if (CONFIG.sounds.hoverLink.src) {
+                        playCustomSound(CONFIG.sounds.hoverLink.src);
+                    } else {
+                        playBeep(400, 0.03, 'triangle');
+                    }
+                }
+            });
+
             let iconHTML = '';
             if (link.customIcon && link.customIcon.trim() !== '') {
                 iconHTML = `<img src="${link.customIcon}" class="link-icon-img flex-shrink-0" alt="">`;
@@ -924,43 +898,29 @@ a.addEventListener('mouseenter', () => {
         qrModalInner.classList.add('scale-100');
         renderQRCode();
     }
+
     function closeQR() {
         qrModal.classList.add('opacity-0', 'invisible');
         qrModalInner.classList.add('scale-90');
         qrModalInner.classList.remove('scale-100');
     }
+
+    // Fungsi QR Code diperbarui menggunakan qrcode.js yang otomatis valid sesuai link web saat ini
     function renderQRCode() {
         qrCodeContainer.innerHTML = '';
-        const url = window.location.href;
-        const size = 150;
-        const canvas = document.createElement('canvas');
-        canvas.width = size;
-        canvas.height = size;
-        const qctx = canvas.getContext('2d');
-        qctx.fillStyle = '#ffffff';
-        qctx.fillRect(0, 0, size, size);
-        qctx.fillStyle = '#000000';
-        const modules = 21;
-        const moduleSize = size / modules;
-        let hash = 0;
-        for (let i = 0; i < url.length; i++) {
-            hash = ((hash << 5) - hash) + url.charCodeAt(i);
-            hash |= 0;
+        const currentUrl = window.location.href;
+        try {
+            new QRCode(qrCodeContainer, {
+                text: currentUrl,
+                width: 150,
+                height: 150,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        } catch (e) {
+            qrCodeContainer.innerHTML = `<p class="text-xs text-red-500">Gagal memuat QR Code</p>`;
         }
-        const seededRandom = (seed) => {
-            let s = seed;
-            return () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; };
-        };
-        const rand = seededRandom(Math.abs(hash));
-        for (let row = 0; row < modules; row++) {
-            for (let col = 0; col < modules; col++) {
-                if (row < 7 && col < 7) { qctx.fillStyle = '#000'; qctx.fillRect(col*moduleSize, row*moduleSize, moduleSize, moduleSize); }
-                else if (row < 7 && col > modules-8) { qctx.fillStyle = '#000'; qctx.fillRect(col*moduleSize, row*moduleSize, moduleSize, moduleSize); }
-                else if (row > modules-8 && col < 7) { qctx.fillStyle = '#000'; qctx.fillRect(col*moduleSize, row*moduleSize, moduleSize, moduleSize); }
-                else if (rand() > 0.5) { qctx.fillStyle = '#000'; qctx.fillRect(col*moduleSize, row*moduleSize, moduleSize, moduleSize); }
-            }
-        }
-        qrCodeContainer.appendChild(canvas);
     }
 
     class Particle {
@@ -995,6 +955,7 @@ a.addEventListener('mouseenter', () => {
         particlesArray = [];
         for (let i = 0; i < CONFIG.background.particleCount; i++) particlesArray.push(new Particle());
     }
+
     function animateParticles() {
         if (!CONFIG.background.particles) {
             ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
@@ -1022,59 +983,54 @@ a.addEventListener('mouseenter', () => {
         particlesArray.forEach(p => { p.update(); p.draw(); });
         animationFrameId = requestAnimationFrame(animateParticles);
     }
+
     function resizeCanvas() {
         particleCanvas.width = window.innerWidth;
         particleCanvas.height = window.innerHeight;
         initParticles();
     }
 
-function updateBackgroundEffects() {
-    const blobContainer = document.getElementById('blobContainer');
-    const gridPattern = document.getElementById('gridPattern');
-    const bgLayer = document.getElementById('bgLayer');
+    function updateBackgroundEffects() {
+        const blobContainer = document.getElementById('blobContainer');
+        const gridPattern = document.getElementById('gridPattern');
+        const bgLayer = document.getElementById('bgLayer');
 
-    blobContainer.style.display = CONFIG.background.blobs ? 'block' : 'none';
-    gridPattern.style.display = CONFIG.background.grid ? 'block' : 'none';
+        blobContainer.style.display = CONFIG.background.blobs ? 'block' : 'none';
+        gridPattern.style.display = CONFIG.background.grid ? 'block' : 'none';
 
-    const isDark = document.documentElement.classList.contains('dark');
-    const imageUrl = CONFIG.background.image?.enabled ? CONFIG.background.image.url : null;
-    const imageBlur = CONFIG.background.image?.blur || '8px';
-    const imageOpacity = CONFIG.background.image?.opacity || 0.7;
+        const isDark = document.documentElement.classList.contains('dark');
+        const imageUrl = CONFIG.background.image?.enabled ? CONFIG.background.image.url : null;
 
-    let bgImageLayer = '';
-    if (imageUrl) {
-        bgImageLayer = `url('${imageUrl}')`;
+        let bgImageLayer = '';
+        if (imageUrl) {
+            bgImageLayer = `url('${imageUrl}')`;
+        }
+
+        let gradientLayer;
+        const hasImage = imageUrl ? true : false;
+
+        if (isDark) {
+            gradientLayer = `linear-gradient(135deg, #0f172a 0%, #1a0a2e 30%, #0a1a1a 60%, #0a0a1a 100%)`;
+        } else {
+            const alpha = hasImage ? '0.75' : '0.55';
+            gradientLayer = `linear-gradient(135deg, #f0f4ff 0%, #fdf2f8 30%, #f0fdf4 60%, #eff6ff 100%)`;
+        }
+
+        let bgValue = gradientLayer;
+        if (bgImageLayer) {
+            bgValue = `${bgImageLayer} center/cover no-repeat, ` + bgValue;
+        }
+
+        bgLayer.style.background = bgValue;
+        bgLayer.style.filter = 'none';
+        
+        const mainCard = document.getElementById('mainCard');
+        if (hasImage) {
+            mainCard.classList.add('bg-opacity-80', 'dark:bg-opacity-70');
+        } else {
+            mainCard.classList.remove('bg-opacity-80', 'dark:bg-opacity-70');
+        }
     }
-
-  let gradientLayer;
-const hasImage = imageUrl ? true : false;
-
-if (isDark) {
-    // Dark mode: alpha cukup 0.55 (gambar sudah gelap)
-    gradientLayer = `linear-gradient(135deg, #0f172a 0%, #1a0a2e 30%, #0a1a1a 60%, #0a0a1a 100%)`;
-} else {
-    // Light mode: jika ada gambar, pertebal overlay (alpha 0.75) agar teks gelap terbaca
-    const alpha = hasImage ? '0.75' : '0.55';
-    gradientLayer = `linear-gradient(135deg, #f0f4ff 0%, #fdf2f8 30%, #f0fdf4 60%, #eff6ff 100%)`;
-}
-
-    let bgValue = gradientLayer;
-    if (bgImageLayer) {
-        bgValue = `${bgImageLayer} center/cover no-repeat, ` + bgValue;
-    }
-
-    bgLayer.style.background = bgValue;
-    // filter jangan diaplikasikan ke bgLayer karena akan memblur gradasi juga.
-    // Sebagai ganti, gambar sudah blur? Tidak bisa langsung. Alternatif: biarkan tanpa filter,
-    // atau gunakan CSS terpisah. Untuk amannya, hilangkan filter dulu.
-    bgLayer.style.filter = 'none';
-    const mainCard = document.getElementById('mainCard');
-if (hasImage) {
-    mainCard.classList.add('bg-opacity-80', 'dark:bg-opacity-70');
-} else {
-    mainCard.classList.remove('bg-opacity-80', 'dark:bg-opacity-70');
-}
-}
 
     function animateProfile() {
         playBeep(900, 0.07, 'sine');
@@ -1147,27 +1103,23 @@ if (hasImage) {
         renderSocials();
         updateStats();
         
-        // Background music
-// Background music
-// Selalu buat Audio object (tidak tergantung soundEnabled)
-if (CONFIG.sounds.backgroundMusic.enabled && CONFIG.sounds.backgroundMusic.src) {
-    const bgMusic = new Audio(CONFIG.sounds.backgroundMusic.src);
-    bgMusic.loop = CONFIG.sounds.backgroundMusic.loop;
-    bgMusic.volume = CONFIG.sounds.backgroundMusic.volume;
-    window.bgMusic = bgMusic; // ← simpan referensi
+        if (CONFIG.sounds.backgroundMusic.enabled && CONFIG.sounds.backgroundMusic.src) {
+            const bgMusic = new Audio(CONFIG.sounds.backgroundMusic.src);
+            bgMusic.loop = CONFIG.sounds.backgroundMusic.loop;
+            bgMusic.volume = CONFIG.sounds.backgroundMusic.volume;
+            window.bgMusic = bgMusic;
 
-    // Hanya putar kalau soundEnabled
-    if (CONFIG.sounds.backgroundMusic.playOnLoad && CONFIG.soundEnabled) {
-        const playPromise = bgMusic.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(() => {
-                document.addEventListener('click', () => {
-                    if (CONFIG.soundEnabled) bgMusic.play();
-                }, { once: true });
-            });
+            if (CONFIG.sounds.backgroundMusic.playOnLoad && CONFIG.soundEnabled) {
+                const playPromise = bgMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        document.addEventListener('click', () => {
+                            if (CONFIG.soundEnabled) bgMusic.play();
+                        }, { once: true });
+                    });
+                }
+            }
         }
-    }
-}
 
         if (CONFIG.profile.taglineEnabled && CONFIG.profile.taglines && CONFIG.profile.taglines.length > 0) {
             setTimeout(typeTagline, 800);
